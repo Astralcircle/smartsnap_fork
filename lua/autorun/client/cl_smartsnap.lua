@@ -674,144 +674,138 @@ hook.Add("CalcView", "SmartsnapSnapView", OnSnapView)
 hook.Add("SpawnMenuOpen", "SmartsnapSpawnMenu", OnSpawnMenu)
 hook.Add("HUDPaintBackground", "SmartsnapPaintHUD", OnPaintHUD)
 
-local function OnPopulateToolPanel(panel)
-	panel:AddControl("ComboBox", {
-		Options = {
-			["default"] = condefs
-		},
-		CVars = convars,
-		Label = "",
-		MenuButton = "1",
-		Folder = "smartsnap"
-	})
+hook.Add("PopulateToolMenu", "SmartSnapToolMenu", function(arguments)
+	spawnmenu.AddToolMenuOption("Utilities", "User", "SmartSnapSettings", "SmartSnap", "", "", function(panel)
+		panel:AddControl("ComboBox", {
+			Options = {
+				["default"] = condefs
+			},
+			CVars = convars,
+			Label = "",
+			MenuButton = "1",
+			Folder = "smartsnap"
+		})
 
-	panel:AddControl("CheckBox", {
-		Label = "Enable",
-		Command = "snap_enabled"
-	})
+		panel:AddControl("CheckBox", {
+			Label = "Enable",
+			Command = "snap_enabled"
+		})
 
-	panel:AddControl("CheckBox", {
-		Label = "Use click grid (USE temporarily enables grid)",
-		Command = "snap_clickgrid"
-	})
+		panel:AddControl("CheckBox", {
+			Label = "Use click grid (USE temporarily enables grid)",
+			Command = "snap_clickgrid"
+		})
 
-	panel:AddControl("CheckBox", {
-		Label = "Hide grid (only shows snap point)",
-		Command = "snap_hidegrid"
-	})
+		panel:AddControl("CheckBox", {
+			Label = "Hide grid (only shows snap point)",
+			Command = "snap_hidegrid"
+		})
 
-	panel:AddControl("CheckBox", {
-		Label = "Smart toggle enabled",
-		Command = "snap_enabletoggle"
-	})
+		panel:AddControl("CheckBox", {
+			Label = "Smart toggle enabled",
+			Command = "snap_enabletoggle"
+		})
 
-	panel:AddControl("CheckBox", {
-		Label = "Revert aim to grid snap on detach",
-		Command = "snap_revertaim"
-	})
+		panel:AddControl("CheckBox", {
+			Label = "Revert aim to grid snap on detach",
+			Command = "snap_revertaim"
+		})
 
-	panel:AddControl("CheckBox", {
-		Label = "Enable for all entities",
-		Command = "snap_allentities"
-	})
+		panel:AddControl("CheckBox", {
+			Label = "Enable for all entities",
+			Command = "snap_allentities"
+		})
 
-	panel:AddControl("CheckBox", {
-		Label = "Enable for all tools",
-		Command = "snap_alltools"
-	})
+		panel:AddControl("CheckBox", {
+			Label = "Enable for all tools",
+			Command = "snap_alltools"
+		})
 
-	panel:AddControl("CheckBox", {
-		Label = "Draw thick center lines",
-		Command = "snap_centerline"
-	})
+		panel:AddControl("CheckBox", {
+			Label = "Draw thick center lines",
+			Command = "snap_centerline"
+		})
 
-	panel:AddControl("Slider", {
-		Label = "Grid toggle delay (double click snap-key)",
-		Command = "snap_toggledelay",
-		Type = "Float",
-		Min = "0.0",
-		Max = "0.2"
-	})
+		panel:AddControl("Slider", {
+			Label = "Grid toggle delay (double click snap-key)",
+			Command = "snap_toggledelay",
+			Type = "Float",
+			Min = "0.0",
+			Max = "0.2"
+		})
 
-	panel:AddControl("Slider", {
-		Label = "Smart lock delay",
-		Command = "snap_lockdelay",
-		Type = "Float",
-		Min = "0.0",
-		Max = "5.0"
-	})
+		panel:AddControl("Slider", {
+			Label = "Smart lock delay",
+			Command = "snap_lockdelay",
+			Type = "Float",
+			Min = "0.0",
+			Max = "5.0"
+		})
 
-	panel:AddControl("CheckBox", {
-		Label = "Bounding box enabled",
-		Command = "snap_boundingbox"
-	})
+		panel:AddControl("CheckBox", {
+			Label = "Bounding box enabled",
+			Command = "snap_boundingbox"
+		})
 
-	panel:AddControl("Slider", {
-		Label = "Grid draw distance",
-		Command = "snap_distance",
-		Type = "Integer",
-		Min = "50",
-		Max = "1000"
-	})
+		panel:AddControl("Slider", {
+			Label = "Grid draw distance",
+			Command = "snap_distance",
+			Type = "Integer",
+			Min = "50",
+			Max = "1000"
+		})
 
-	panel:AddControl("Slider", {
-		Label = "Grid edge offset",
-		Command = "snap_gridoffset",
-		Type = "Float",
-		Min = "0.0",
-		Max = "2.5"
-	})
+		panel:AddControl("Slider", {
+			Label = "Grid edge offset",
+			Command = "snap_gridoffset",
+			Type = "Float",
+			Min = "0.0",
+			Max = "2.5"
+		})
 
-	panel:AddControl("Slider", {
-		Label = "Grid transparency",
-		Command = "snap_gridalpha",
-		Type = "Float",
-		Min = "0.1",
-		Max = "1.0"
-	})
+		panel:AddControl("Slider", {
+			Label = "Grid transparency",
+			Command = "snap_gridalpha",
+			Type = "Float",
+			Min = "0.1",
+			Max = "1.0"
+		})
 
-	panel:AddControl("Slider", {
-		Label = "Maximum number of snap points on an axis",
-		Command = "snap_gridlimit",
-		Type = "Integer",
-		Min = "2",
-		Max = "64"
-	})
+		panel:AddControl("Slider", {
+			Label = "Maximum number of snap points on an axis",
+			Command = "snap_gridlimit",
+			Type = "Integer",
+			Min = "2",
+			Max = "64"
+		})
 
-	panel:AddControl("Slider", {
-		Label = "Minimum distance between each snap point",
-		Command = "snap_gridsize",
-		Type = "Integer",
-		Min = "2",
-		Max = "64"
-	})
+		panel:AddControl("Slider", {
+			Label = "Minimum distance between each snap point",
+			Command = "snap_gridsize",
+			Type = "Integer",
+			Min = "2",
+			Max = "64"
+		})
 
-	panel:AddControl("Label", {
-		Text = ""
-	})
+		panel:AddControl("Label", {
+			Text = ""
+		})
 
-	panel:AddControl("Label", {
-		Text = "The following option should prevent FPS drops from occuring, however it might have a slight impact on the average FPS while the grid is showing. Do NOT uncheck this option unless you are experiencing very low FPS or fully understands its purpose."
-	})
+		panel:AddControl("Label", {
+			Text = "The following option should prevent FPS drops from occuring, however it might have a slight impact on the average FPS while the grid is showing. Do NOT uncheck this option unless you are experiencing very low FPS or fully understands its purpose."
+		})
 
-	panel:AddControl("Label", {
-		Text = "NOTE: This option is only effective when the grid is showing, it does not impact regular gameplay!"
-	})
+		panel:AddControl("Label", {
+			Text = "NOTE: This option is only effective when the grid is showing, it does not impact regular gameplay!"
+		})
 
-	panel:AddControl("Label", {
-		Text = ""
-	})
+		panel:AddControl("Label", {
+			Text = ""
+		})
 
-	panel:AddControl("CheckBox", {
-		Label = "Garbage collection boost",
-		Command = "snap_gcboost"
-	})
-end
-
-function OnPopulateToolMenu()
-	spawnmenu.AddToolMenuOption("Options", "Player", "SmartSnapSettings", "SmartSnap", "", "", OnPopulateToolPanel, {
-		SwitchConVar = 'snap_enabled'
-	})
-end
-
-hook.Add("PopulateToolMenu", "SmartSnapToolMenu", OnPopulateToolMenu)
+		panel:AddControl("CheckBox", {
+			Label = "Garbage collection boost",
+			Command = "snap_gcboost"
+		})
+	end)
+end)
