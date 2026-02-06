@@ -106,8 +106,8 @@ local function OnInitialize()
 		local file = file.Read(filename)
 
 		if file then
-			lines = string.Explode("\n", file)
-			header = table.remove(lines, 1)
+			local lines = string.Explode("\n", file)
+			local header = table.remove(lines, 1)
 
 			if header == "SMARTSNAP_OFFSETS" then
 				for _, line in ipairs(lines) do
@@ -126,7 +126,7 @@ local function OnInitialize()
 end
 
 local function OnShutDown()
-	output = file.Read('smartsnap_offsets_custom.png')
+	local output = file.Read('smartsnap_offsets_custom.png')
 
 	if output == nil then
 		output = "SMARTSNAP_OFFSETS\n"
@@ -339,7 +339,7 @@ local function DrawGridLines(vOrigin, vSX, vSY, gridLines, offsetX, offsetY, sig
 	local vTemp = vOrigin + vSX * 0.5
 	local vX = vTemp + vSY * (offsetY)
 	local vY = vTemp + vSY * (1 - offsetY)
-	local vOffset, temp
+	local vsOffset, temp
 	local xtemp = ToScreen(vX) - ToScreen(vY)
 	xtemp:Normalize()
 	local vsNormal = xtemp
@@ -456,7 +456,7 @@ end
 local function OnPaintHUD()
 	target.active = false
 	if GetConVarNumber("snap_clickgrid") ~= 0 and not snapclick then return end
-	snapclickprev = snapclick
+	local snapclickprev = snapclick
 	snapclick = snapclickprev and snapclickfade > CurTime()
 	if (GetConVarNumber("snap_enabled") == 0) then return end
 	if (not LocalPlayer():Alive() or LocalPlayer():InVehicle()) then return end
@@ -513,6 +513,7 @@ local function OnPaintHUD()
 		cache.aFaces = faces
 	end
 
+	local intersection
 	local obvgrid = cache.aGrid
 	local obvsnap = cache.aSnap
 	local faces = cache.aFaces
@@ -547,6 +548,7 @@ local function OnPaintHUD()
 		DrawBoundary(obvgrid.lse, obvgrid.use, obvgrid.lne, obvgrid.lsw)
 	end
 
+	local snaperror
 	local vectorOrigin = faces[target.face][1]
 	local vectorX = faces[target.face][2]
 	local vectorY = faces[target.face][3]
